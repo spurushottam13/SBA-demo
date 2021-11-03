@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "ENV_NODE=development webpack-dev-server",
+    "start": "webpack-dev-server",
+    "build": "webpack --env env=production && node post.build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
