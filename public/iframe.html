@@ -1,0 +1,25 @@
+<html>
+  <title>IFrame</title>
+  <body>
+    <video src="./mov_bbb.mp4" controls crossorigin></video>
+    <br />
+    <div id="ct-time"></div>
+    <script>
+      const video = document.querySelector("video");
+      const sba = new SharedArrayBuffer(1024);
+      const state = new Uint32Array(sba);
+      video.addEventListener("timeupdate", (e) => {
+        state[0] = video.currentTime;
+        document.querySelector("#ct-time").innerHTML =
+          "Current Time: " + video.currentTime;
+      });
+      window.addEventListener("message", (event) => {
+        const { type } = JSON.parse(event.data);
+        if (type === "@sp13/getSBA") {
+          console.log({ sba });
+          event.source.postMessage({ type: "@sp13/SBA", value: sba });
+        }
+      });
+    </script>
+  </body>
+</html>
